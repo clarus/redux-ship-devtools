@@ -15,17 +15,17 @@ export default class Index extends PureComponent<void, Props, void> {
     return (
       <section className="section">
         <div className="container">
-          <div className="tile is-ancestor">
-            <div className="tile is-parent">
-              <div className="tile notification is-children">
+          <div className="columns">
+            <div className="column is-one-third">
+              <div className="notification">
                 <Content
                   dispatch={this.props.dispatch}
                   state={this.props.state}
                 />
               </div>
             </div>
-            <div className="tile is-parent">
-              <div className="tile notification is-children">
+            <div className="column">
+              <div className="notification">
                 <Devtools />
               </div>
             </div>
