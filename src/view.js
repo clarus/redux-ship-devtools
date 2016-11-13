@@ -17,7 +17,7 @@ export default class Index extends PureComponent<void, Props, void> {
 
   render() {
     return (
-      <div>
+      <div className="content">
         <p className="title is-1">Content</p>
         <button onClick={this.handleClickGetEye}>
           Get eye

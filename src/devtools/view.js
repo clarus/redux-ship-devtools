@@ -2,6 +2,8 @@
 import React, { PureComponent } from 'react';
 import * as Controller from './controller';
 import * as Model from './model';
+import Action from './view.action';
+import Logs from './view.logs';
 
 type Props = {
   dispatch: (action: Controller.Action) => void,
@@ -11,18 +13,23 @@ type Props = {
 export default class Index extends PureComponent<void, Props, void> {
   render() {
     return (
-      <div>
+      <div className="content">
         <p className="title is-1">Devtools</p>
         <div className="tile is-ancestor">
           <div className="tile is-parent">
             <div className="tile is-child box">
-              <p className="title is-3">Logs</p>
+              <Logs
+                dispatch={this.props.dispatch}
+                state={this.props.state}
+              />
             </div>
           </div>
           <div className="tile is-vertical">
             <div className="tile is-parent">
               <div className="tile is-child box">
-                <p className="title is-3">Action</p>
+                <Action
+                  state={this.props.state}
+                />
               </div>
             </div>
             <div className="tile is-parent">

@@ -17,7 +17,7 @@ export function inspectControl<Action, Effect, Commit, State>(
   return function* (action) {
     const {snapshot} = yield* Ship.snap(control(action));
     dispatch({
-      type: 'AddEvent',
+      type: 'AddLog',
       action,
       snapshot: (snapshot: Ship.Snapshot<any, any>),
     });

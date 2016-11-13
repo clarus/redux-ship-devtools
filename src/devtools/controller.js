@@ -3,21 +3,23 @@ import * as Ship from 'redux-ship';
 import * as Model from './model';
 
 export type Action = {
-  type: 'AddEvent',
+  type: 'AddLog',
   action: mixed,
   snapshot: Ship.Snapshot<mixed, mixed>,
+} | {
+  type: 'SelectLog',
+  logIndex: number,
 };
 
 type Control<A> = Ship.Ship<*, Model.Commit, Model.State, A>;
 
 export function* control(action: Action): Control<void> {
   switch (action.type) {
-    case 'AddEvent':
-      yield* Ship.commit({
-        type: 'AddEvent',
-        action: action.action,
-        snapshot: action.snapshot,
-      });
+    case 'AddLog':
+      yield* Ship.commit(action);
+      return;
+    case 'SelectLog':
+      yield* Ship.commit(action);
       return;
     default:
       return;

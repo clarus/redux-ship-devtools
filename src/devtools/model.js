@@ -3,21 +3,26 @@ import * as Ship from 'redux-ship';
 
 export type State = {
   logs: {action: mixed, snapshot: Ship.Snapshot<mixed, mixed>}[],
+  selectedLog: ?number,
 };
 
 export const initialState: State = {
   logs: [],
+  selectedLog: null,
 };
 
 export type Commit = {
-  type: 'AddEvent',
+  type: 'AddLog',
   action: mixed,
   snapshot: Ship.Snapshot<mixed, mixed>,
+} | {
+  type: 'SelectLog',
+  logIndex: number,
 };
 
 export function reduce(state: State, commit: Commit): State {
   switch (commit.type) {
-    case 'AddEvent':
+    case 'AddLog':
       return {
         ...state,
         logs: [
@@ -27,6 +32,11 @@ export function reduce(state: State, commit: Commit): State {
             snapshot: commit.snapshot,
           }
         ],
+      };
+    case 'SelectLog':
+      return {
+        ...state,
+        selectedLog: commit.logIndex,
       };
     default:
       return state;
