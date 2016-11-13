@@ -39,9 +39,10 @@ export function reduce(state: State, commit: Commit): State {
         ],
       };
     case 'SelectLog':
-      return {
+      return commit.logIndex === state.selectedLog ? state : {
         ...state,
         selectedLog: commit.logIndex,
+        selectedSnapshotItem: null,
       };
     case 'SelectSnapshotItem':
       return {
