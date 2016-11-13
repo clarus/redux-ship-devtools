@@ -15,6 +15,12 @@ export default class Index extends PureComponent<void, Props, void> {
     });
   };
 
+  handleClickGetMovies = (): void => {
+    this.props.dispatch({
+      type: 'GetMovies',
+    });
+  };
+
   render() {
     return (
       <div className="content">
@@ -23,6 +29,16 @@ export default class Index extends PureComponent<void, Props, void> {
           Get eye
         </button>
         <p>{this.props.state.eye}</p>
+        <button onClick={this.handleClickGetMovies}>
+          Get movies
+        </button>
+        {this.props.state.movies &&
+          <ul>
+            {this.props.state.movies.map(movie =>
+              <li key={movie}>{movie}</li>
+            )}
+          </ul>
+        }
       </div>
     );
   }

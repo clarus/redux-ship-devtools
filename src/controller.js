@@ -5,6 +5,8 @@ import * as Model from './model';
 
 export type Action = {
   type: 'GetEye',
+} | {
+  type: 'GetMovies',
 };
 
 type Control<A> = Ship.Ship<*, Model.Commit, Model.State, A>;
@@ -17,10 +19,26 @@ function* getEye(): Control<void> {
   });
 }
 
+function* getMovies(): Control<void> {
+  const r2d2 = yield* Effect.httpRequest('http://swapi.co/api/people/3/');
+  const movieUrls: string[] = r2d2.films;
+  const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl) {
+    const movie = yield* Effect.httpRequest(movieUrl);
+    return movie.title;
+  }));
+  yield* Ship.commit({
+    type: 'GetMoviesSuccess',
+    movies: movieTitles,
+  });
+}
+
 export function* control(action: Action): Control<void> {
   switch (action.type) {
     case 'GetEye':
       yield* getEye();
+      return;
+    case 'GetMovies':
+      yield* getMovies();
       return;
     default:
       return;
