@@ -2,8 +2,6 @@
 import React, { PureComponent } from 'react';
 import * as Controller from './controller';
 import * as Model from './model';
-import Content from './view.content';
-import Devtools from './view.devtools';
 
 type Props = {
   dispatch: (action: Controller.Action) => void,
@@ -11,27 +9,21 @@ type Props = {
 };
 
 export default class Index extends PureComponent<void, Props, void> {
+  handleClickGetEye = (): void => {
+    this.props.dispatch({
+      type: 'GetEye',
+    });
+  };
+
   render() {
     return (
-      <section className="section">
-        <div className="container">
-          <div className="columns">
-            <div className="column is-one-third">
-              <div className="notification">
-                <Content
-                  dispatch={this.props.dispatch}
-                  state={this.props.state}
-                />
-              </div>
-            </div>
-            <div className="column">
-              <div className="notification">
-                <Devtools />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div>
+        <p className="title is-1">Content</p>
+        <button onClick={this.handleClickGetEye}>
+          Get eye
+        </button>
+        <p>{this.props.state.eye}</p>
+      </div>
     );
   }
 }

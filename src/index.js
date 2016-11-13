@@ -8,9 +8,10 @@ import Index from './view';
 import store from './store';
 import * as Controller from './controller';
 import * as Effect from './effect';
+import * as Devtools from './devtools/index';
 
 function dispatch(action: Controller.Action): void {
-  Ship.run(Effect.run, store, logControl(Controller.control)(action));
+  Ship.run(Effect.run, store, Devtools.inspectControl(logControl(Controller.control))(action));
 }
 
 function render() {
