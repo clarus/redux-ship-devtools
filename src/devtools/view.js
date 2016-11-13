@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import * as Controller from './controller';
 import * as Model from './model';
 import Action from './view.action';
+import Command from './view.command';
 import Logs from './view.logs';
 import Shape from './view.shape';
 
@@ -40,17 +41,22 @@ export default class Index extends PureComponent<void, Props, void> {
               <div className="tile is-parent">
                 <div className="tile is-child box">
                   <Shape
+                    dispatch={this.props.dispatch}
                     snapshot={selectedLog && selectedLog.snapshot}
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="tile is-parent">
-            <div className="tile is-child box">
-              <p className="title is-5">Command</p>
+          {this.props.state.selectedSnapshotItem &&
+            <div className="tile is-parent">
+              <div className="tile is-child box">
+                <Command
+                  snapshotItem={this.props.state.selectedSnapshotItem}
+                />
+              </div>
             </div>
-          </div>
+          }
         </div>
       </div>
     );

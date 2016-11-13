@@ -9,6 +9,9 @@ export type Action = {
 } | {
   type: 'SelectLog',
   logIndex: number,
+} | {
+  type: 'SelectSnapshotItem',
+  snapshotItem: Ship.SnapshotItem<mixed, mixed>,
 };
 
 type Control<A> = Ship.Ship<*, Model.Commit, Model.State, A>;
@@ -19,6 +22,9 @@ export function* control(action: Action): Control<void> {
       yield* Ship.commit(action);
       return;
     case 'SelectLog':
+      yield* Ship.commit(action);
+      return;
+    case 'SelectSnapshotItem':
       yield* Ship.commit(action);
       return;
     default:

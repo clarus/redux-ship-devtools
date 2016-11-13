@@ -63,6 +63,7 @@ export default class Index extends PureComponent<void, Props, void> {
     return (
       <div className="content">
         <p className="title is-1">Content</p>
+        <p className="subtitle is-3">R2-D2</p>
         {this.renderEye()}
         {this.renderMovies()}
       </div>
