@@ -12,27 +12,36 @@ export type Action = {
 type Control<A> = Ship.Ship<*, Model.Commit, Model.State, A>;
 
 function* getEye(): Control<void> {
-  const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
-  yield* Ship.commit({
-    type: 'GetEyeSuccess',
-    eye: r2d2.eye_color,
-  });
+  const isLoading = yield* Ship.getState(state => state.isEyeLoading);
+  if (!isLoading) {
+    yield* Ship.commit({
+      type: 'GetEyeStart',
+    });
+    const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
+    yield* Ship.commit({
+      type: 'GetEyeSuccess',
+      eye: r2d2.eye_color,
+    });
+  }
 }
 
 function* getMovies(): Control<void> {
-  const r2d2 = yield* Effect.httpRequest('http://swapi.co/api/people/3/');
-  const movieUrls: string[] = r2d2.films;
-  const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl, index) {
-    if (index >= 2) {
-      yield* Ship.getState(state => state);
-    }
-    const movie = yield* Effect.httpRequest(movieUrl);
-    return movie.title;
-  }));
-  yield* Ship.commit({
-    type: 'GetMoviesSuccess',
-    movies: movieTitles,
-  });
+  const isLoading = yield* Ship.getState(state => state.areMoviesLoading);
+  if (!isLoading) {
+    yield* Ship.commit({
+      type: 'GetMoviesStart',
+    });
+    const r2d2 = yield* Effect.httpRequest('http://swapi.co/api/people/3/');
+    const movieUrls: string[] = r2d2.films;
+    const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl) {
+      const movie = yield* Effect.httpRequest(movieUrl);
+      return movie.title;
+    }));
+    yield* Ship.commit({
+      type: 'GetMoviesSuccess',
+      movies: movieTitles,
+    });
+  }
 }
 
 export function* control(action: Action): Control<void> {

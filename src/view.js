@@ -21,15 +21,31 @@ export default class Index extends PureComponent<void, Props, void> {
     });
   };
 
-  render() {
+  buttonClassName(isLoading: bool): string {
+    return 'button is-primary' + (isLoading ? ' is-loading' : '');
+  }
+
+  renderEye() {
     return (
-      <div className="content">
-        <p className="title is-1">Content</p>
-        <button onClick={this.handleClickGetEye}>
+      <div className="box">
+        <button
+          className={this.buttonClassName(this.props.state.isEyeLoading)}
+          onClick={this.handleClickGetEye}
+        >
           Get eye
         </button>
         <p>{this.props.state.eye}</p>
-        <button onClick={this.handleClickGetMovies}>
+      </div>
+    );
+  }
+
+  renderMovies() {
+    return (
+      <div className="box">
+        <button
+          className={this.buttonClassName(this.props.state.areMoviesLoading)}
+          onClick={this.handleClickGetMovies}
+        >
           Get movies
         </button>
         {this.props.state.movies &&
@@ -39,6 +55,16 @@ export default class Index extends PureComponent<void, Props, void> {
             )}
           </ul>
         }
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div className="content">
+        <p className="title is-1">Content</p>
+        {this.renderEye()}
+        {this.renderMovies()}
       </div>
     );
   }

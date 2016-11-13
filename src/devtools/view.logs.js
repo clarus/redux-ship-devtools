@@ -19,7 +19,7 @@ export default class Logs extends PureComponent<void, Props, void> {
   render() {
     return (
       <div>
-        <p className="title is-3">Logs</p>
+        <p className="title is-5">Logs</p>
         <ul>
           {this.props.state.logs.map((log, index) =>
             <li key={index}>

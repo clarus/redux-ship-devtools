@@ -48,7 +48,7 @@ export default class Index extends PureComponent<void, Props, void> {
           </div>
           <div className="tile is-parent">
             <div className="tile is-child box">
-              <p className="title is-3">Command</p>
+              <p className="title is-5">Command</p>
             </div>
           </div>
         </div>

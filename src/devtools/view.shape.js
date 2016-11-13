@@ -79,7 +79,7 @@ export default class Shape extends PureComponent<void, Props, void> {
   render() {
     return (
       <div>
-        <p className="title is-3">Shape</p>
+        <p className="title is-5">Shape</p>
         <div className="tile is-ancestor">
           {this.props.snapshot && this.renderSnapshot(this.props.snapshot)}
         </div>
