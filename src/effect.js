@@ -10,14 +10,14 @@ export async function run(effect: Effect): Promise<any> {
   switch (effect.type) {
   case 'HttpRequest': {
     const response = await fetch(effect.url);
-    return await response.text();
+    return await response.json();
   }
   default:
     return;
   }
 }
 
-export function httpRequest<Commit, State>(url: string): Ship.Ship<Effect, Commit, State, string> {
+export function httpRequest<Commit, State>(url: string): Ship.Ship<Effect, Commit, State, any> {
   return Ship.call({
     type: 'HttpRequest',
     url,

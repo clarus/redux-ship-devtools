@@ -9,10 +9,18 @@ type Props = {
 };
 
 export default class Index extends PureComponent<void, Props, void> {
+  handleClickGetEye = (): void => {
+    this.props.dispatch({
+      type: 'GetEye',
+    });
+  };
+
   render() {
     return (
       <div>
-        Hi
+        <button onClick={this.handleClickGetEye}>
+          Get eye
+        </button>
       </div>
     );
   }
