@@ -22,7 +22,10 @@ function* getEye(): Control<void> {
 function* getMovies(): Control<void> {
   const r2d2 = yield* Effect.httpRequest('http://swapi.co/api/people/3/');
   const movieUrls: string[] = r2d2.films;
-  const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl) {
+  const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl, index) {
+    if (index >= 2) {
+      yield* Ship.getState(state => state);
+    }
     const movie = yield* Effect.httpRequest(movieUrl);
     return movie.title;
   }));

@@ -19,28 +19,30 @@ export default class Index extends PureComponent<void, Props, void> {
     return (
       <div className="content">
         <p className="title is-1">Devtools</p>
-        <div className="tile is-ancestor">
-          <div className="tile is-parent">
-            <div className="tile is-child box">
-              <Logs
-                dispatch={this.props.dispatch}
-                state={this.props.state}
-              />
-            </div>
-          </div>
-          <div className="tile is-vertical">
-            <div className="tile is-parent">
+        <div className="tile is-ancestor is-vertical">
+          <div className="tile">
+            <div className="tile is-parent is-3">
               <div className="tile is-child box">
-                <Action
-                  action={selectedLog && selectedLog.action}
+                <Logs
+                  dispatch={this.props.dispatch}
+                  state={this.props.state}
                 />
               </div>
             </div>
-            <div className="tile is-parent">
-              <div className="tile is-child box">
-                <Shape
-                  snapshot={selectedLog && selectedLog.snapshot}
-                />
+            <div className="tile is-vertical is-9">
+              <div className="tile is-parent">
+                <div className="tile is-child box">
+                  <Action
+                    action={selectedLog && selectedLog.action}
+                  />
+                </div>
+              </div>
+              <div className="tile is-parent">
+                <div className="tile is-child box">
+                  <Shape
+                    snapshot={selectedLog && selectedLog.snapshot}
+                  />
+                </div>
               </div>
             </div>
           </div>

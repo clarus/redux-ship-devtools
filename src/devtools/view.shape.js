@@ -6,11 +6,15 @@ type Props = {
   snapshot: ?Snapshot<mixed, mixed>,
 };
 
+const style = {
+  padding: 2,
+};
+
 export default class Shape extends PureComponent<void, Props, void> {
   renderEffect() {
     return (
-      <div className="tile is-parent">
-        <div className="tile is-child notification is-warning">
+      <div className="tile is-parent" style={style}>
+        <div className="tile is-child notification is-warning has-text-centered" style={style}>
           Effect
         </div>
       </div>
@@ -19,8 +23,8 @@ export default class Shape extends PureComponent<void, Props, void> {
 
   renderCommit() {
     return (
-      <div className="tile is-parent">
-        <div className="tile is-child notification is-danger">
+      <div className="tile is-parent" style={style}>
+        <div className="tile is-child notification is-danger has-text-centered" style={style}>
           Commit
         </div>
       </div>
@@ -29,8 +33,8 @@ export default class Shape extends PureComponent<void, Props, void> {
 
   renderGetState() {
     return (
-      <div className="tile is-parent">
-        <div className="tile is-child notification is-success">
+      <div className="tile is-parent" style={style}>
+        <div className="tile is-child notification is-success has-text-centered" style={style}>
           GetState
         </div>
       </div>
@@ -41,9 +45,7 @@ export default class Shape extends PureComponent<void, Props, void> {
     return (
       <div className="tile">
         {snapshots.map((snapshot, index) =>
-          <div key={index}>
-            {this.renderSnapshot(snapshot)}
-          </div>
+          this.renderSnapshot(snapshot)
         )}
       </div>
     );
@@ -68,9 +70,7 @@ export default class Shape extends PureComponent<void, Props, void> {
     return (
       <div className="tile is-vertical">
         {snapshot.map((snapshotItem, index) =>
-          <div key={index}>
-            {this.renderSnapshotItem(snapshotItem)}
-          </div>
+          this.renderSnapshotItem(snapshotItem)
         )}
       </div>
     );
@@ -80,7 +80,9 @@ export default class Shape extends PureComponent<void, Props, void> {
     return (
       <div>
         <p className="title is-3">Shape</p>
-        {this.props.snapshot && this.renderSnapshot(this.props.snapshot)}
+        <div className="tile is-ancestor">
+          {this.props.snapshot && this.renderSnapshot(this.props.snapshot)}
+        </div>
       </div>
     );
   }
