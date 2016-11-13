@@ -31,10 +31,10 @@ function* getMovies(): Control<void> {
     yield* Ship.commit({
       type: 'GetMoviesStart',
     });
-    const r2d2 = yield* Effect.httpRequest('http://swapi.co/api/people/3/');
+    const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
     const movieUrls: string[] = r2d2.films;
     const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl) {
-      const movie = yield* Effect.httpRequest(movieUrl);
+      const movie = yield* Effect.httpRequest(movieUrl.replace('http://', 'https://'));
       return movie.title;
     }));
     yield* Ship.commit({
