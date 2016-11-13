@@ -12,8 +12,8 @@ export type Action = {
 type Control<A> = Ship.Ship<*, Model.Commit, Model.State, A>;
 
 function* getEye(): Control<void> {
-  const isLoading = yield* Ship.getState(state => state.isEyeLoading);
-  if (!isLoading) {
+  const currentEye = yield* Ship.getState(state => state.eye);
+  if (!currentEye) {
     yield* Ship.commit({
       type: 'GetEyeStart',
     });
@@ -26,8 +26,8 @@ function* getEye(): Control<void> {
 }
 
 function* getMovies(): Control<void> {
-  const isLoading = yield* Ship.getState(state => state.areMoviesLoading);
-  if (!isLoading) {
+  const currentMovies = yield* Ship.getState(state => state.movies);
+  if (!currentMovies) {
     yield* Ship.commit({
       type: 'GetMoviesStart',
     });
