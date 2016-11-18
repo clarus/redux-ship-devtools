@@ -1,6 +1,5 @@
 // @flow
-import {applyMiddleware, createStore} from 'redux';
-import createLogger from 'redux-logger';
+import {createStore} from 'redux';
 import * as Model from './model';
 
-export default createStore(Model.reduce, Model.initialState, applyMiddleware(createLogger()));
+export default createStore(Model.reduce, Model.initialState);
