@@ -20,17 +20,16 @@ export default class Logs extends PureComponent<void, Props, void> {
     return (
       <div>
         <p className="title is-5">Logs</p>
-        <ul>
-          {this.props.state.logs.map((log, index) =>
-            <li key={index}>
-              <LogsLog
-                dispatch={this.props.dispatch}
-                index={index}
-                title={this.actionTitle(log.action)}
-              />
-            </li>
-          )}
-        </ul>
+        {this.props.state.logs.map((log, index) =>
+          <p key={index} style={{margin: 2}}>
+            <LogsLog
+              active={index === this.props.state.selectedLog}
+              dispatch={this.props.dispatch}
+              index={index}
+              title={this.actionTitle(log.action)}
+            />
+          </p>
+        )}
       </div>
     );
   }

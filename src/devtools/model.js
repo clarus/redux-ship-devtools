@@ -37,6 +37,9 @@ export function reduce(state: State, commit: Commit): State {
             snapshot: commit.snapshot,
           }
         ],
+        selectedLog: typeof state.selectedLog === 'number' ?
+          state.selectedLog :
+          state.logs.length
       };
     case 'SelectLog':
       return commit.logIndex === state.selectedLog ? state : {

@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import * as Controller from './controller';
 
 type Props = {
+  active: bool,
   dispatch: (action: Controller.Action) => void,
   index: number,
   title: string,
@@ -17,10 +18,11 @@ export default class LogsLog extends PureComponent<void, Props, void> {
   };
 
   render() {
+    const className = 'button' + (this.props.active ? ' is-active' : '');
     return (
-      <code onClick={this.handleClickLog} style={{cursor: 'pointer'}}>
+      <a className={className} onClick={this.handleClickLog} style={{cursor: 'pointer'}}>
         {this.props.title}
-      </code>
+      </a>
     );
   }
 }
