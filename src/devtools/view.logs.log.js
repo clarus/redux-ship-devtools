@@ -18,7 +18,7 @@ export default class LogsLog extends PureComponent<void, Props, void> {
   };
 
   render() {
-    const className = 'button' + (this.props.active ? ' is-active' : '');
+    const className = 'button is-fullwidth' + (this.props.active ? ' is-active' : '');
     return (
       <a className={className} onClick={this.handleClickLog} style={{cursor: 'pointer'}}>
         {this.props.title}
