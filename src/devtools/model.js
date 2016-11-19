@@ -37,15 +37,16 @@ export function reduce(state: State, commit: Commit): State {
             snapshot: commit.snapshot,
           }
         ],
-        selectedLog: typeof state.selectedLog === 'number' ?
-          state.selectedLog :
-          state.logs.length
+        selectedLog: typeof state.selectedLog !== 'number' ?
+          state.logs.length :
+          state.selectedLog,
+        selectedSnapshotItem: commit.snapshot[0] || null,
       };
     case 'SelectLog':
       return commit.logIndex === state.selectedLog ? state : {
         ...state,
         selectedLog: commit.logIndex,
-        selectedSnapshotItem: null,
+        selectedSnapshotItem: state.logs[commit.logIndex].snapshot[0] || null,
       };
     case 'SelectSnapshotItem':
       return {
