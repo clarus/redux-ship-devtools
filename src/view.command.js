@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import type {SnapshotItem} from 'redux-ship';
+import Code from './view.code';
 import * as Util from './util';
 
 type Props = {
@@ -8,31 +9,21 @@ type Props = {
 };
 
 export default class Command extends PureComponent<void, Props, void> {
-  renderJSON(json: mixed) {
-    return (
-      <pre>
-        <code>
-          {JSON.stringify(json, null, 2)}
-        </code>
-      </pre>
-    );
-  }
-
   renderContent(snapshotItem: SnapshotItem<mixed, mixed>) {
     switch (snapshotItem.type) {
       case 'Effect':
         return (
           <dl>
             <dt><strong>Effect</strong></dt>
-            <dd>{this.renderJSON(snapshotItem.effect)}</dd>
+            <dd><Code json={snapshotItem.effect} /></dd>
             <dt><strong>Result</strong></dt>
-            <dd>{this.renderJSON(snapshotItem.result)}</dd>
+            <dd><Code json={snapshotItem.result} /></dd>
           </dl>
         );
       case 'Commit':
-        return this.renderJSON(snapshotItem.commit);
+        return <Code json={snapshotItem.commit} />;
       case 'GetState':
-        return this.renderJSON(snapshotItem.state);
+        return <Code json={snapshotItem.state} />;
       default:
         return null;
     }
