@@ -1,54 +1,59 @@
 // @flow
+import type {Snapshot, SnapshotItem} from 'redux-ship';
 
 export type State = {
-  areMoviesLoading: bool,
-  eye: ?string,
-  isEyeLoading: bool,
-  movies: ?(string[]),
+  logs: {action: mixed, snapshot: Snapshot<mixed, mixed>}[],
+  selectedLog: ?number,
+  selectedSnapshotItem: ?SnapshotItem<mixed, mixed>,
 };
 
 export const initialState: State = {
-  areMoviesLoading: false,
-  eye: null,
-  isEyeLoading: false,
-  movies: null,
+  logs: [],
+  selectedLog: null,
+  selectedSnapshotItem: null,
 };
 
 export type Commit = {
-  type: 'GetEyeStart',
+  type: 'AddLog',
+  action: mixed,
+  snapshot: Snapshot<mixed, mixed>,
 } | {
-  type: 'GetEyeSuccess',
-  eye: string,
+  type: 'SelectLog',
+  logIndex: number,
 } | {
-  type: 'GetMoviesStart',
-} | {
-  type: 'GetMoviesSuccess',
-  movies: string[],
+  type: 'SelectSnapshotItem',
+  snapshotItem: SnapshotItem<mixed, mixed>,
 };
 
 export function reduce(state: State, commit: Commit): State {
   switch (commit.type) {
-    case 'GetEyeStart':
+    case 'AddLog':
       return {
         ...state,
-        isEyeLoading: true,
+        logs: [
+          ...state.logs,
+          {
+            action: commit.action,
+            snapshot: commit.snapshot,
+          }
+        ],
+        selectedLog: typeof state.selectedLog !== 'number' ?
+          state.logs.length :
+          state.selectedLog,
+        selectedSnapshotItem: typeof state.selectedLog !== 'number' ?
+          commit.snapshot[0] || null :
+          state.selectedSnapshotItem,
       };
-    case 'GetEyeSuccess':
-      return {
+    case 'SelectLog':
+      return commit.logIndex === state.selectedLog ? state : {
         ...state,
-        eye: commit.eye,
-        isEyeLoading: false,
+        selectedLog: commit.logIndex,
+        selectedSnapshotItem: state.logs[commit.logIndex].snapshot[0] || null,
       };
-    case 'GetMoviesStart':
+    case 'SelectSnapshotItem':
       return {
         ...state,
-        areMoviesLoading: true,
-      };
-    case 'GetMoviesSuccess':
-      return {
-        ...state,
-        areMoviesLoading: false,
-        movies: commit.movies,
+        selectedSnapshotItem: commit.snapshotItem,
       };
     default:
       return state;
