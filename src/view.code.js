@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 
 type Props = {
+  isExpanded: bool,
   json: mixed,
 };
 
@@ -10,7 +11,7 @@ export default class Code extends PureComponent<void, Props, void> {
     return (
       <pre>
         <code>
-          {JSON.stringify(this.props.json, null, 2)}
+          {JSON.stringify(this.props.json, null, this.props.isExpanded ? 2 : 0)}
         </code>
       </pre>
     );
