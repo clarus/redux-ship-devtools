@@ -17,6 +17,7 @@ export default class Index extends PureComponent<void, Props, void> {
     const selectedLog = typeof this.props.state.selectedLog === 'number' ?
       this.props.state.logs[this.props.state.selectedLog] :
       null;
+    const tileChildStyle = {overflowX: 'auto'};
     return (
       <div className="container">
         <div className="notification">
@@ -24,7 +25,7 @@ export default class Index extends PureComponent<void, Props, void> {
             <div className="tile is-ancestor is-vertical">
               <div className="tile">
                 <div className="tile is-parent is-3">
-                  <div className="tile is-child box">
+                  <div className="tile is-child box" style={tileChildStyle}>
                     <Logs
                       dispatch={this.props.dispatch}
                       state={this.props.state}
@@ -33,14 +34,14 @@ export default class Index extends PureComponent<void, Props, void> {
                 </div>
                 <div className="tile is-vertical is-9">
                   <div className="tile is-parent">
-                    <div className="tile is-child box">
+                    <div className="tile is-child box" style={tileChildStyle}>
                       <Action
                         action={selectedLog && selectedLog.action}
                       />
                     </div>
                   </div>
                   <div className="tile is-parent">
-                    <div className="tile is-child box">
+                    <div className="tile is-child box" style={tileChildStyle}>
                       <Shape
                         dispatch={this.props.dispatch}
                         snapshot={selectedLog && selectedLog.snapshot}
@@ -51,7 +52,7 @@ export default class Index extends PureComponent<void, Props, void> {
               </div>
               {this.props.state.selectedSnapshotItem &&
                 <div className="tile is-parent">
-                  <div className="tile is-child box">
+                  <div className="tile is-child box" style={tileChildStyle}>
                     <Command
                       snapshotItem={this.props.state.selectedSnapshotItem}
                     />
