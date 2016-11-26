@@ -5,7 +5,7 @@ import * as Model from './model';
 import Action from './view.action';
 import Command from './view.command';
 import Logs from './view.logs';
-import Shape from './view.shape';
+import Snapshot from './view.snapshot';
 
 type Props = {
   dispatch: (action: Controller.Action) => void,
@@ -42,7 +42,7 @@ export default class Index extends PureComponent<void, Props, void> {
                   </div>
                   <div className="tile is-parent">
                     <div className="tile is-child box" style={tileChildStyle}>
-                      <Shape
+                      <Snapshot
                         dispatch={this.props.dispatch}
                         snapshot={selectedLog && selectedLog.snapshot}
                       />

@@ -1,16 +1,16 @@
 // @flow
 import React, { PureComponent } from 'react';
-import type {SnapshotItem} from 'redux-ship';
+import * as Ship from 'redux-ship';
 import * as Controller from './controller';
 
 type Props = {
   className: string,
   dispatch: (action: Controller.Action) => void,
-  snapshotItem: SnapshotItem<mixed, mixed>,
+  snapshotItem: Ship.SnapshotItem<mixed, mixed>,
   title: string,
 };
 
-export default class ShapeItem extends PureComponent<void, Props, void> {
+export default class SnapshotItem extends PureComponent<void, Props, void> {
   handleClickSnapshotItem = (): void => {
     this.props.dispatch({
       type: 'SelectSnapshotItem',
