@@ -10,6 +10,12 @@ type Props = {
 };
 
 export default class Logs extends PureComponent<void, Props, void> {
+  handleClear = (): void => {
+    this.props.dispatch({
+      type: 'Clear',
+    });
+  };
+
   actionTitle(action: mixed): string {
     return typeof action === 'object' && action !== null && typeof action.type === 'string' ?
       action.type :
@@ -30,6 +36,14 @@ export default class Logs extends PureComponent<void, Props, void> {
             />
           </p>
         )}
+        <p style={{marginTop: 20}}>
+          <a
+            className="button is-danger is-fullwidth"
+            onClick={this.handleClear}
+          >
+            Clear
+          </a>
+        </p>
       </div>
     );
   }

@@ -18,6 +18,8 @@ export type Commit = {
   action: mixed,
   snapshot: Snapshot<mixed, mixed>,
 } | {
+  type: 'Clear',
+} | {
   type: 'SelectLog',
   logIndex: number,
 } | {
@@ -44,6 +46,8 @@ export function reduce(state: State, commit: Commit): State {
           commit.snapshot[0] || null :
           state.selectedSnapshotItem,
       };
+    case 'Clear':
+      return initialState;
     case 'SelectLog':
       return commit.logIndex === state.selectedLog ? state : {
         ...state,
