@@ -11,7 +11,7 @@ export default class Action extends PureComponent<void, Props, void> {
     return (
       <div>
         <p className="title is-5">Action</p>
-        {this.props.action && <Code json={this.props.action} />}
+        {this.props.action && <Code isExpanded json={this.props.action} />}
       </div>
     );
   }

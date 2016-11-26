@@ -15,15 +15,15 @@ export default class Command extends PureComponent<void, Props, void> {
         return (
           <dl>
             <dt><strong>Effect</strong></dt>
-            <dd><Code json={snapshotItem.effect} /></dd>
+            <dd><Code isExpanded json={snapshotItem.effect} /></dd>
             <dt><strong>Result</strong></dt>
-            <dd><Code json={snapshotItem.result} /></dd>
+            <dd><Code isExpanded json={snapshotItem.result} /></dd>
           </dl>
         );
       case 'Commit':
-        return <Code json={snapshotItem.commit} />;
+        return <Code isExpanded json={snapshotItem.commit} />;
       case 'GetState':
-        return <Code json={snapshotItem.state} />;
+        return <Code isExpanded json={snapshotItem.state} />;
       default:
         return null;
     }

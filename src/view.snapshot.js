@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import * as Ship from 'redux-ship';
 import * as Controller from './controller';
+import Code from './view.code';
 import SnapshotItem from './view.snapshot.item';
 import * as Util from './util';
 
@@ -51,6 +52,11 @@ export default class Snapshot extends PureComponent<void, Props, void> {
     return (
       <div>
         <p className="title is-5">Snapshot</p>
+        {this.props.snapshot &&
+          <div style={{marginBottom: 20}}>
+            <Code isExpanded={false} json={this.props.snapshot} />
+          </div>
+        }
         <div className="tile is-ancestor">
           {this.props.snapshot && this.renderSnapshot(this.props.snapshot)}
         </div>
