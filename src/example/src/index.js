@@ -1,27 +1,31 @@
 // @flow
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Ship from 'redux-ship';
-import {logControl} from 'redux-ship-logger';
 import Index from './view';
 import store from './store';
 import * as Controller from './controller';
+import * as Effect from './effect';
 
-function dispatch(action: Controller.Action): void {
-  Ship.run(() => {}, store, logControl(Controller.control)(action));
-}
-
-export function inspectControl<Action, Effect, Commit, State>(
+function inspectControl<Action, Effect, Commit, State>(
   control: (action: Action) => Ship.Ship<Effect, Commit, State, void>
 ): (action: Action) => Ship.Ship<Effect, Commit, State, void> {
   return function* (action) {
     const {snapshot} = yield* Ship.snap(control(action));
-    dispatch({
-      type: 'AddLog',
-      action,
-      snapshot: (snapshot: Ship.Snapshot<any, any>),
-    });
+    window.postMessage({
+      type: 'ReduxShipDevtools',
+      payload: {
+        action,
+        snapshot,
+      },
+      version: 1,
+    }, '*');
   };
+}
+
+function dispatch(action: Controller.Action): void {
+  Ship.run(Effect.run, store, inspectControl(Controller.control)(action));
 }
 
 function render() {
@@ -30,7 +34,7 @@ function render() {
       dispatch={dispatch}
       state={store.getState()}
     />,
-    document.getElementById('devtools')
+    document.getElementById('root')
   );
 }
 

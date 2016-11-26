@@ -1,7 +1,8 @@
 {
-  "name": "redux-ship-devtools",
+  "name": "redux-ship-devtools-example",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://clarus.github.io/redux-ship-devtools",
   "devDependencies": {
     "react-scripts": "0.7.0"
   },
@@ -16,7 +17,9 @@
     "redux-ship-logger": "0.0.9"
   },
   "scripts": {
+    "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "npm run build && gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
