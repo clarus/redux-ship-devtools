@@ -19,6 +19,7 @@ export default class Index extends PureComponent<void, Props, void> {
       null;
     const style = {
       notification: {
+        marginBottom: 25,
         padding: 10,
       },
       tileChild: {
@@ -59,17 +60,17 @@ export default class Index extends PureComponent<void, Props, void> {
                       />
                     </div>
                   </div>
+                  {this.props.state.selectedSnapshotItem &&
+                    <div className="tile is-parent" style={style.tileParent}>
+                      <div className="tile is-child box" style={style.tileChild}>
+                        <Command
+                          snapshotItem={this.props.state.selectedSnapshotItem}
+                        />
+                      </div>
+                    </div>
+                  }
                 </div>
               </div>
-              {this.props.state.selectedSnapshotItem &&
-                <div className="tile is-parent" style={style.tileParent}>
-                  <div className="tile is-child box" style={style.tileChild}>
-                    <Command
-                      snapshotItem={this.props.state.selectedSnapshotItem}
-                    />
-                  </div>
-                </div>
-              }
             </div>
           </div>
         </div>
