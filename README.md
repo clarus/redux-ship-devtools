@@ -7,7 +7,7 @@ The Redux Ship DevTools extension helps to visualize [Redux Ship](https://github
 * vertically: effects run sequence;
 * horizontally: effects run in parallel.
 
-Install the extension and go on the [demo page](https://clarus.github.io/redux-ship/) to see a live example.
+Install the extension and go to the [demo page](https://clarus.github.io/redux-ship/) to see a live example.
 
 ## Install
 ### For Chrome
