@@ -1,13 +1,13 @@
 # Redux Ship DevTools
 > Side effects inspector for [Redux Ship](https://github.com/clarus/redux-ship).
 
-<img src='https://raw.githubusercontent.com/clarus/redux-ship-devtools/master/screenshot.png' alt='Screenshot' width='700px'>
+<img src='https://raw.githubusercontent.com/clarus/redux-ship-devtools/master/screenshot.png' alt='Screenshot'>
 
-The Redux Ship DevTools extension helps you visualize your [Redux Ship](https://github.com/clarus/redux-ship) programs by showing a 2D view of the side effects. There are two axis:
-* vertical: effects run sequence;
-* horizontal: effects run in parallel.
+The Redux Ship DevTools extension helps to visualize [Redux Ship](https://github.com/clarus/redux-ship) programs by showing a 2D view of the side effects.
+* vertically: effects run sequence;
+* horizontally: effects run in parallel.
 
-Install the extension and go on the [demo page](https://clarus.github.io/redux-ship/) to see an example.
+Install the extension and go on the [demo page](https://clarus.github.io/redux-ship/) to see a live example.
 
 ## Install
 ### For Chrome
