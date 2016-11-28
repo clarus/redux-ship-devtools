@@ -25,6 +25,7 @@ function render() {
 
 store.subscribe(render);
 
+// $FlowFixMe
 const eventPageConnection = chrome.runtime.connect({
   name: 'ReduxShipDevtools',
 });
