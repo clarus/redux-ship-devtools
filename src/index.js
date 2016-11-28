@@ -1,5 +1,4 @@
 // @flow
-/*global chrome*/
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -25,14 +24,13 @@ function render() {
 
 store.subscribe(render);
 
-// $FlowFixMe
-const eventPageConnection = chrome.runtime.connect({
+const eventPageConnection = window.chrome.runtime.connect({
   name: 'ReduxShipDevtools',
 });
 
 eventPageConnection.postMessage({
   name: 'init',
-  tabId: chrome.devtools.inspectedWindow.tabId,
+  tabId: window.chrome.devtools.inspectedWindow.tabId,
 });
 
 eventPageConnection.onMessage.addListener(message => {
