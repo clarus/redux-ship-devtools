@@ -7,6 +7,8 @@ export type Action = {
   type: 'GetEye',
 } | {
   type: 'GetMovies',
+} | {
+  type: 'GetPeople',
 };
 
 type Control<A> = Ship.Ship<*, Model.Commit, Model.State, A>;
@@ -44,6 +46,46 @@ function* getMovies(): Control<void> {
   }
 }
 
+function* getPeopleNames(peopleUrls: string[]): Control<string[]> {
+  return yield* Ship.all(peopleUrls.map(function* (peopleUrl) {
+    const people = yield* Effect.httpRequest(peopleUrl.replace('http://', 'https://'));
+    return people.name;
+  }));
+}
+
+function* getSpeciesPeople(speciesUrl: string): Control<any> {
+  const species = yield* Effect.httpRequest(speciesUrl);
+  return yield* getPeopleNames(species.people);
+}
+
+function* getHomeWorldPeople(homeWorldUrl: string): Control<any> {
+  const homeWorld = yield* Effect.httpRequest(homeWorldUrl);
+  return yield* getPeopleNames(homeWorld.residents);
+}
+
+function* getPeople(): Control<void> {
+  const currentPeople = yield* Ship.getState(state => state.people);
+  if (!currentPeople) {
+    yield* Ship.commit({
+      type: 'GetPeopleStart',
+    });
+    const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
+    const homeWorldUrl: string = r2d2.homeworld;
+    const speciesUrl: string = r2d2.species[0];
+    const [speciesPeople, homeWorldPeople] = yield* Ship.all2(
+      getSpeciesPeople(speciesUrl),
+      getHomeWorldPeople(homeWorldUrl),
+    );
+    yield* Ship.commit({
+      type: 'GetPeopleSuccess',
+      people: {
+        homeWorld: homeWorldPeople,
+        species: speciesPeople,
+      },
+    });
+  }
+}
+
 export function* control(action: Action): Control<void> {
   switch (action.type) {
     case 'GetEye':
@@ -51,6 +93,9 @@ export function* control(action: Action): Control<void> {
       return;
     case 'GetMovies':
       yield* getMovies();
+      return;
+    case 'GetPeople':
+      yield* getPeople();
       return;
     default:
       return;

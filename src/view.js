@@ -31,7 +31,7 @@ export default class Index extends PureComponent<void, Props, void> {
       },
     }
     return (
-      <div className="container">
+      <div className="container" style={{maxWidth: 'none'}}>
         <div className="notification" style={style.notification}>
           <div className="content">
             <div className="tile is-ancestor is-vertical">

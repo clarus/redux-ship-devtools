@@ -21,6 +21,12 @@ export default class Index extends PureComponent<void, Props, void> {
     });
   };
 
+  handleClickGetPeople = (): void => {
+    this.props.dispatch({
+      type: 'GetPeople',
+    });
+  };
+
   buttonClassName(isLoading: bool): string {
     return 'button is-primary' + (isLoading ? ' is-loading' : '');
   }
@@ -65,6 +71,42 @@ export default class Index extends PureComponent<void, Props, void> {
     );
   }
 
+  renderPeopleResults(people: {homeWorld: string[], species: string[]}) {
+    return (
+      <div>
+        <p>People of species</p>
+        <ul>
+          {people.species.map(people =>
+            <li key={people}>{people}</li>
+          )}
+        </ul>
+        <p>People of home world</p>
+        <ul>
+          {people.homeWorld.map(people =>
+            <li key={people}>{people}</li>
+          )}
+        </ul>
+      </div>
+    );
+  }
+
+  renderPeople() {
+    return (
+      <div style={{marginTop: 40}}>
+        <p className="title is-2">Nested</p>
+        <p>
+          <button
+            className={this.buttonClassName(this.props.state.arePeopleLoading)}
+            onClick={this.handleClickGetPeople}
+          >
+            Get people of species and home world
+          </button>
+        </p>
+        {this.props.state.people && this.renderPeopleResults(this.props.state.people)}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -105,6 +147,7 @@ export default class Index extends PureComponent<void, Props, void> {
               </ul>
               {this.renderEye()}
               {this.renderMovies()}
+              {this.renderPeople()}
             </div>
           </div>
         </section>
