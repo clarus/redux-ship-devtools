@@ -36,7 +36,7 @@ function* getMovies(): Control<void> {
     const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
     const movieUrls: string[] = r2d2.films;
     const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl) {
-      const movie = yield* Effect.httpRequest(movieUrl.replace('http://', 'https://'));
+      const movie = yield* Effect.httpRequest(movieUrl);
       return movie.title;
     }));
     yield* Ship.commit({
@@ -48,7 +48,7 @@ function* getMovies(): Control<void> {
 
 function* getPeopleNames(peopleUrls: string[]): Control<string[]> {
   return yield* Ship.all(peopleUrls.map(function* (peopleUrl) {
-    const people = yield* Effect.httpRequest(peopleUrl.replace('http://', 'https://'));
+    const people = yield* Effect.httpRequest(peopleUrl);
     return people.name;
   }));
 }

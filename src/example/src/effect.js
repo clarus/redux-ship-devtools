@@ -9,7 +9,7 @@ export type Effect = {
 export async function run(effect: Effect): Promise<any> {
   switch (effect.type) {
   case 'HttpRequest': {
-    const response = await fetch(effect.url);
+    const response = await fetch(effect.url.replace('http://', 'https://'));
     return await response.json();
   }
   default:
