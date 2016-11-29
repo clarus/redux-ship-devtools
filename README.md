@@ -3,7 +3,7 @@
 
 <img src='https://raw.githubusercontent.com/clarus/redux-ship-devtools/master/screenshot.png' alt='Screenshot'>
 
-The Redux Ship DevTools extension helps to visualize [Redux Ship](https://github.com/clarus/redux-ship) programs by showing a 2D view of the side effects.
+The Redux Ship DevTools shows a 2D view of the side effects of [Redux Ship](https://github.com/clarus/redux-ship) programs.
 * vertically: effects run sequence;
 * horizontally: effects run in parallel.
 
@@ -17,7 +17,7 @@ Download the extension on the [Chrome Web Store](https://chrome.google.com/webst
 WIP
 
 ## Usage
-Install the devtools connector:
+To enable the Redux Ship DevTools in a project you need to connect it to your code. For that, install the devtools connector:
 ```
 npm install redux-ship-devtools
 ```

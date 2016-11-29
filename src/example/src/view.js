@@ -27,13 +27,16 @@ export default class Index extends PureComponent<void, Props, void> {
 
   renderEye() {
     return (
-      <div className="box">
-        <button
-          className={this.buttonClassName(this.props.state.isEyeLoading)}
-          onClick={this.handleClickGetEye}
-        >
-          Get eye
-        </button>
+      <div style={{marginTop: 40}}>
+        <p className="title is-2">Sequential</p>
+        <p>
+          <button
+            className={this.buttonClassName(this.props.state.isEyeLoading)}
+            onClick={this.handleClickGetEye}
+          >
+            Get eye
+          </button>
+        </p>
         <p>{this.props.state.eye}</p>
       </div>
     );
@@ -41,13 +44,16 @@ export default class Index extends PureComponent<void, Props, void> {
 
   renderMovies() {
     return (
-      <div className="box">
-        <button
-          className={this.buttonClassName(this.props.state.areMoviesLoading)}
-          onClick={this.handleClickGetMovies}
-        >
-          Get movies
-        </button>
+      <div style={{marginTop: 40}}>
+        <p className="title is-2">Concurrent</p>
+        <p>
+          <button
+            className={this.buttonClassName(this.props.state.areMoviesLoading)}
+            onClick={this.handleClickGetMovies}
+          >
+            Get movies
+          </button>
+        </p>
         {this.props.state.movies &&
           <ul>
             {this.props.state.movies.map(movie =>
@@ -61,15 +67,57 @@ export default class Index extends PureComponent<void, Props, void> {
 
   render() {
     return (
-      <section className="section">
-        <div className="container">
-          <div className="content">
-            <p className="title is-1">R2-D2</p>
-            {this.renderEye()}
-            {this.renderMovies()}
+      <div>
+        <section className="hero is-light">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                Redux Ship DevTools
+              </h1>
+              <h2 className="subtitle">
+                R2-D2
+              </h2>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+        <section className="section">
+          <div className="container">
+            <div className="content">
+              <figure className="image">
+                <img
+                  alt="Screenshot"
+                  src="https://raw.githubusercontent.com/clarus/redux-ship-devtools/master/screenshot.png"
+                  style={{marginBottom: 20, maxWidth: 800}}
+                />
+              </figure>
+              <p>
+                This example demonstrates the use of the <a href="https://github.com/clarus/redux-ship-devtools">Redux Ship DevTools</a>. Install from the <a href="https://chrome.google.com/webstore/detail/redux-ship-devtools/kbcgcifbcgamdlgdahbfangmfiofpmni">Chrome store</a> and open the Chrome DevTools to get a 2D view of the side effects of this web page.
+              </p>
+              <ul>
+                <li>vertically: sequential effects;</li>
+                <li>horizontally: concurrent effects.</li>
+              </ul>
+              There are three kinds of effects:
+              <ul>
+                <li><span className="tag is-success">GetState</span> get a part of the Redux state;</li>
+                <li><span className="tag is-danger">Commit</span> send a synchronous action to Redux;</li>
+                <li><span className="tag is-warning">Effect</span> run a user-defined effect, such as an API call or a timer.</li>
+              </ul>
+              {this.renderEye()}
+              {this.renderMovies()}
+            </div>
+          </div>
+        </section>
+        <footer className="footer">
+          <div className="container">
+            <div className="content has-text-centered">
+              <p>
+                <a href="https://github.com/clarus/redux-ship-devtools/tree/master/src/example">Redux Ship DevTools Example</a> by <a href="https://github.com/clarus">Guillaume Claret</a>. The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
     );
   }
 }
