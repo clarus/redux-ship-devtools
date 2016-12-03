@@ -3,13 +3,12 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Ship from 'redux-ship';
-import {logControl} from 'redux-ship-logger';
 import Index from './view';
 import store from './store';
 import * as Controller from './controller';
 
 function dispatch(action: Controller.Action): void {
-  Ship.run(() => {}, store, logControl(Controller.control)(action));
+  Ship.run(() => {}, store, Controller.control(action));
 }
 
 function render() {
