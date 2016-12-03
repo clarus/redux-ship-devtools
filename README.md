@@ -7,7 +7,7 @@ The Redux Ship DevTools show a 2D view of the side effects of a [Redux Ship](htt
 * vertically: sequential side effects;
 * horizontally: concurrent side effects.
 
-Go to the [demo page](https://clarus.github.io/redux-ship/) to see a live example :rocket:.
+Go to the [demo page](https://clarus.github.io/redux-ship-devtools/) to see a live example :rocket:.
 
 ## Install
 ### For Chrome
