@@ -53,14 +53,22 @@ function* getPeopleNames(peopleUrls: string[]): Control<string[]> {
   }));
 }
 
-function* getSpeciesPeople(speciesUrl: string): Control<any> {
+function* getSpeciesPeople(speciesUrl: string): Control<void> {
   const species = yield* Effect.httpRequest(speciesUrl);
-  return yield* getPeopleNames(species.people);
+  const names = yield* getPeopleNames(species.people);
+  yield* Ship.commit({
+    type: 'GetPeopleSpecies',
+    species: names,
+  });
 }
 
-function* getHomeWorldPeople(homeWorldUrl: string): Control<any> {
+function* getHomeWorldPeople(homeWorldUrl: string): Control<void> {
   const homeWorld = yield* Effect.httpRequest(homeWorldUrl);
-  return yield* getPeopleNames(homeWorld.residents);
+  const names = yield* getPeopleNames(homeWorld.residents);
+  yield* Ship.commit({
+    type: 'GetPeopleHomeWorld',
+    homeWorld: names,
+  });
 }
 
 function* getPeople(): Control<void> {
@@ -72,16 +80,12 @@ function* getPeople(): Control<void> {
     const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
     const homeWorldUrl: string = r2d2.homeworld;
     const speciesUrl: string = r2d2.species[0];
-    const [speciesPeople, homeWorldPeople] = yield* Ship.all2(
+    yield* Ship.all([
       getSpeciesPeople(speciesUrl),
       getHomeWorldPeople(homeWorldUrl),
-    );
+    ]);
     yield* Ship.commit({
       type: 'GetPeopleSuccess',
-      people: {
-        homeWorld: homeWorldPeople,
-        species: speciesPeople,
-      },
     });
   }
 }

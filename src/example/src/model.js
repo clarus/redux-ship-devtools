@@ -7,8 +7,8 @@ export type State = {
   isEyeLoading: bool,
   movies: ?(string[]),
   people: ?{
-    homeWorld: string[],
-    species: string[],
+    homeWorld: ?(string[]),
+    species: ?(string[]),
   },
 };
 
@@ -32,13 +32,15 @@ export type Commit = {
   type: 'GetMoviesSuccess',
   movies: string[],
 } | {
+  type: 'GetPeopleHomeWorld',
+  homeWorld: string[],
+} | {
+  type: 'GetPeopleSpecies',
+  species: string[],
+} | {
   type: 'GetPeopleStart',
 } | {
   type: 'GetPeopleSuccess',
-  people: {
-    homeWorld: string[],
-    species: string[],
-  },
 };
 
 export function reduce(state: State, commit: Commit): State {
@@ -65,16 +67,35 @@ export function reduce(state: State, commit: Commit): State {
         areMoviesLoading: false,
         movies: commit.movies,
       };
+    case 'GetPeopleHomeWorld':
+      return {
+        ...state,
+        people: {
+          ...state.people,
+          homeWorld: commit.homeWorld,
+        },
+      };
+    case 'GetPeopleSpecies':
+      return {
+        ...state,
+        people: {
+          ...state.people,
+          species: commit.species,
+        },
+      };
     case 'GetPeopleStart':
       return {
         ...state,
         arePeopleLoading: true,
+        people: {
+          homeWorld: null,
+          species: null,
+        },
       };
     case 'GetPeopleSuccess':
       return {
         ...state,
         arePeopleLoading: false,
-        people: commit.people,
       };
     default:
       return state;
