@@ -22,7 +22,7 @@
   },
   "files": [
     "dist",
-    "src"
+    "src/*.js"
   ],
   "homepage": "https://github.com/clarus/redux-ship-devtools",
   "license": "MIT",
