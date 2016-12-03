@@ -16,7 +16,7 @@ export const initialState: State = {
 export type Commit = {
   type: 'AddLog',
   action: mixed,
-  snapshot: Snapshot<mixed, mixed>,
+  snapshot: Snapshot<any, any>,
 } | {
   type: 'Clear',
 } | {

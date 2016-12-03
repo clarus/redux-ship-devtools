@@ -1,18 +1,5 @@
 {
-  "name": "redux-ship-devtools",
-  "version": "0.1.1",
-  "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.18.2",
-    "babel-eslint": "^7.1.1",
-    "babel-plugin-syntax-flow": "^6.18.0",
-    "babel-plugin-transform-flow-strip-types": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babylon": "^6.14.1",
-    "cross-env": "^3.1.3",
-    "flow-bin": "^0.36.0",
-    "react-scripts": "0.7.0"
-  },
+  "author": "Guillaume Claret",
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "react": "^15.4.1",
@@ -21,13 +8,36 @@
     "redux-logger": "^2.7.4",
     "redux-ship": "^0.1.2"
   },
-  "main": "dist/main/index.js",
-  "module": "dist/module/index.js",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "babylon": "^6.14.1",
+    "cross-env": "^3.1.3",
+    "flow-bin": "^0.36.0",
+    "react-scripts": "0.7.0"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "homepage": "https://github.com/clarus/redux-ship-devtools",
+  "license": "MIT",
+  "main": "dist/main/lib.js",
+  "name": "redux-ship-devtools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clarus/redux-ship-devtools.git"
+  },
   "scripts": {
     "build": "react-scripts build",
-    "build:main": "cross-env BABEL_ENV=main babel src/lib --out-dir dist/main/",
-    "build:module": "cross-env BABEL_ENV=module babel src/lib --out-dir dist/module/",
+    "build:main": "cross-env BABEL_ENV=main babel src --ignore chrome,example --out-dir dist/main/",
     "eject": "react-scripts eject",
-    "prepublish": "npm run build:main && npm run build:module"
-  }
+    "prepublish": "npm run build:main"
+  },
+  "version": "0.1.1"
 }
