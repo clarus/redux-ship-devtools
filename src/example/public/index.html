@@ -14,62 +14,68 @@
           <div class="columns" style="margin-top: 40px">
             <div class="column is-3">
               <p class="title is-2">R2-D2</p>
-              <p>This example demonstrates the use of the <a href="https://github.com/clarus/redux-ship-devtools">Redux Ship DevTools</a>. Install the extension from the <a href="https://chrome.google.com/webstore/detail/redux-ship-devtools/kbcgcifbcgamdlgdahbfangmfiofpmni">Chrome store</a> to use in any <a href="https://github.com/clarus/redux-ship">Redux Ship</a> projects.</p>
+              <p>This example demonstrates the use of the <a href="https://github.com/clarus/redux-ship-devtools">Redux Ship DevTools</a>. Install the extension from the <a href="https://chrome.google.com/webstore/detail/redux-ship-devtools/kbcgcifbcgamdlgdahbfangmfiofpmni">Chrome store</a> and follow the <a href="https://github.com/clarus/redux-ship-devtools#usage">instructions</a> to use it in your <a href="https://github.com/clarus/redux-ship">Redux Ship</a> projects.</p>
               <div id="root"></div>
             </div>
             <div class="column is-9">
               <p class="title is-2">Redux Ship DevTools</p>
-              <div class="columns">
-                <div class="column is-4">
-                  <table class="table is-narrow">
-                    <tr>
-                      <td class="has-text-right" style="border: 0">
-                        <span class="tag">Vertically</span>
-                      </td>
-                      <td style="border: 0">
-                        sequential events
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="has-text-right" style="border: 0">
-                        <span class="tag">Horizontally</span>
-                      </td>
-                      <td style="border: 0">
-                        concurrent events
-                      </td>
-                    </tr>
-                  </table>
+              <p class="is-hidden-tablet">
+                <span class="tag is-danger">Not enough pixels</span>
+                The dev tools cannot be displayed on mobile phone screens.
+              </p>
+              <div class="is-hidden-mobile">
+                <div class="columns">
+                  <div class="column is-4">
+                    <table class="table is-narrow">
+                      <tr>
+                        <td class="has-text-right" style="border: 0">
+                          <span class="tag">Vertically</span>
+                        </td>
+                        <td style="border: 0">
+                          sequential events
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="has-text-right" style="border: 0">
+                          <span class="tag">Horizontally</span>
+                        </td>
+                        <td style="border: 0">
+                          concurrent events
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="column">
+                    <table class="table is-narrow">
+                      <tr>
+                        <td class="has-text-right" style="border: 0">
+                          <span class="tag is-success">GetState</span>
+                        </td>
+                        <td style="border: 0">
+                          get a part of the Redux state
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="has-text-right" style="border: 0">
+                          <span class="tag is-danger">Commit</span>
+                        </td>
+                        <td style="border: 0">
+                          dispatch a synchronous action to Redux
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="has-text-right" style="border: 0">
+                          <span class="tag is-warning">Effect</span>
+                        </td>
+                        <td style="border: 0">
+                          a user-defined side effect (API call, timer, ...)
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
-                <div class="column">
-                  <table class="table is-narrow">
-                    <tr>
-                      <td class="has-text-right" style="border: 0">
-                        <span class="tag is-success">GetState</span>
-                      </td>
-                      <td style="border: 0">
-                        get a part of the Redux state
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="has-text-right" style="border: 0">
-                        <span class="tag is-danger">Commit</span>
-                      </td>
-                      <td style="border: 0">
-                        dispatch a synchronous action to Redux
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="has-text-right" style="border: 0">
-                        <span class="tag is-warning">Effect</span>
-                      </td>
-                      <td style="border: 0">
-                        a user-defined side effect (API call, timer, ...)
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                <div id="dev-tools"></div>
               </div>
-              <div id="dev-tools"></div>
             </div>
           </div>
         </div>

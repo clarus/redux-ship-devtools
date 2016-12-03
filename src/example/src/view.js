@@ -78,13 +78,13 @@ export default class Index extends PureComponent<void, Props, void> {
   renderPeopleResults(people: {homeWorld: string[], species: string[]}) {
     return (
       <div>
-        <p>People of species</p>
+        <p>People of species:</p>
         <ul>
           {people.species.map(people =>
             <li key={people}>{people}</li>
           )}
         </ul>
-        <p>People of home world</p>
+        <p>People of home world:</p>
         <ul>
           {people.homeWorld.map(people =>
             <li key={people}>{people}</li>
