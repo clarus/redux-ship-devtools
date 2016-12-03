@@ -3,17 +3,18 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Ship from 'redux-ship';
-import {inspectControl, mountDevTools} from 'redux-ship-devtools';
+import * as ShipDevTools from 'redux-ship-devtools';
 import {logControl} from 'redux-ship-logger';
 import Index from './view';
 import store from './store';
 import * as Controller from './controller';
 import * as Effect from './effect';
 
-const insp = mountDevTools('dev-tools');
+const mountedInspect = ShipDevTools.mount('dev-tools');
 
 function dispatch(action: Controller.Action): void {
-  Ship.run(Effect.run, store, insp(inspectControl(logControl(Controller.control)))(action));
+  const control = mountedInspect(ShipDevTools.inspect(logControl(Controller.control)));
+  Ship.run(Effect.run, store, control(action));
 }
 
 function render() {

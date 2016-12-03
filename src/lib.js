@@ -9,7 +9,7 @@ import store from './store';
 type Control<Action, Effect, Commit, State> =
   (action: Action) => Ship.Ship<Effect, Commit, State, void>;
 
-export function inspectControl<Action, Effect, Commit, State>(
+export function inspect<Action, Effect, Commit, State>(
   control: Control<Action, Effect, Commit, State>
 ): Control<Action, Effect, Commit, State> {
   return function* (action) {
@@ -25,7 +25,7 @@ export function inspectControl<Action, Effect, Commit, State>(
   };
 }
 
-export function mountDevTools<Action, Effect, Commit, State>(
+export function mount<Action, Effect, Commit, State>(
   domId: string
 ): (control: Control<Action, Effect, Commit, State>) => Control<Action, Effect, Commit, State> {
   function dispatch(action: Controller.Action): void {
