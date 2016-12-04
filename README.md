@@ -1,7 +1,7 @@
 # Redux Ship DevTools
 > Side effects inspector for [Redux Ship](https://github.com/clarus/redux-ship).
 
-[![Screenshot](https://raw.githubusercontent.com/clarus/redux-ship-devtools/master/screenshot.png)](https://clarus.github.io/redux-ship-devtools/)
+[![Screenshot](https://raw.githubusercontent.com/clarus/redux-ship-devtools/screenshots/animation.gif)](https://clarus.github.io/redux-ship-devtools/)
 
 The Redux Ship DevTools show a 2D view of the side effects of a [Redux Ship](https://github.com/clarus/redux-ship) program:
 * vertically: sequential side effects;
