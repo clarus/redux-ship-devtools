@@ -1,43 +1,21 @@
 // @flow
-import 'babel-polyfill';
-import React from 'react';
-import ReactDOM from 'react-dom';
 import * as Ship from 'redux-ship';
-import Index from './view';
-import store from './store';
-import * as Controller from './controller';
 
-function dispatch(action: Controller.Action): void {
-  Ship.run(() => {}, store, Controller.control(action));
+type Control<Action, Effect, Commit, State> =
+  (action: Action) => Ship.Ship<Effect, Commit, State, void>;
+
+export function inspect<Action, Effect, Commit, State>(
+  control: Control<Action, Effect, Commit, State>
+): Control<Action, Effect, Commit, State> {
+  return function* (action) {
+    const {snapshot} = yield* Ship.snap(control(action));
+    window.postMessage({
+      type: 'ReduxShipDevtools',
+      payload: {
+        action,
+        snapshot,
+      },
+      version: 1,
+    }, '*');
+  };
 }
-
-function render() {
-  ReactDOM.render(
-    <Index
-      dispatch={dispatch}
-      state={store.getState()}
-    />,
-    document.getElementById('root')
-  );
-}
-
-store.subscribe(render);
-
-const eventPageConnection = window.chrome.runtime.connect({
-  name: 'ReduxShipDevtools',
-});
-
-eventPageConnection.postMessage({
-  name: 'init',
-  tabId: window.chrome.devtools.inspectedWindow.tabId,
-});
-
-eventPageConnection.onMessage.addListener(message => {
-  dispatch({
-    type: 'AddLog',
-    action: message.action,
-    snapshot: message.snapshot,
-  });
-});
-
-render();
