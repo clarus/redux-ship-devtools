@@ -12,38 +12,62 @@ type Props = {
 };
 
 export default class Snapshot extends PureComponent<void, Props, void> {
+  renderNothing() {
+    return (
+      <SnapshotItem
+        className="is-info"
+        dispatch={this.props.dispatch}
+        snapshotItem={null}
+        title="Nothing"
+      />
+    );
+  }
+
   renderAll(snapshots: Ship.Snapshot<mixed, mixed>[]) {
     return (
       <div className="tile">
-        {snapshots.map(snapshot =>
-          this.renderSnapshot(snapshot)
-        )}
+        {snapshots.length !== 0 ?
+          snapshots.map(snapshot => this.renderSnapshot(snapshot)) :
+          this.renderNothing()
+        }
       </div>
     );
+  }
+
+  snapshotItemTitle(snapshotItem: Ship.SnapshotItem<mixed, mixed>): string {
+    if (snapshotItem.type === 'Effect' && typeof snapshotItem.effect === 'object' &&
+      snapshotItem.effect !== null && typeof snapshotItem.effect.type === 'string'
+    ) {
+      return snapshotItem.effect.type;
+    }
+    return snapshotItem.type;
   }
 
   renderSnapshotItem(snapshotItem: Ship.SnapshotItem<mixed, mixed>) {
     switch (snapshotItem.type) {
       case 'All':
         return this.renderAll(snapshotItem.snapshots);
-      default:
+      default: {
+        const title = this.snapshotItemTitle(snapshotItem);
         return (
           <SnapshotItem
             className={Util.snapshotItemClassName(snapshotItem)}
             dispatch={this.props.dispatch}
             snapshotItem={snapshotItem}
-            title={snapshotItem.type}
+            title={title}
           />
         );
+      }
     }
   }
 
   renderSnapshot(snapshot: Ship.Snapshot<mixed, mixed>) {
     return (
       <div className="tile is-vertical">
-        {snapshot.map(snapshotItem =>
-          this.renderSnapshotItem(snapshotItem)
-        )}
+        {snapshot.length !== 0 ?
+          snapshot.map(snapshotItem => this.renderSnapshotItem(snapshotItem)) :
+          this.renderNothing()
+        }
       </div>
     );
   }

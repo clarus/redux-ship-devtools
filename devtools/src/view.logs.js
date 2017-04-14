@@ -16,10 +16,13 @@ export default class Logs extends PureComponent<void, Props, void> {
     });
   };
 
-  actionTitle(action: mixed): string {
-    return typeof action === 'object' && action !== null && typeof action.type === 'string' ?
-      action.type :
-      'unknown';
+  actionTitle(action: mixed): ?string {
+    if (typeof action === 'object' && action !== null && typeof action.type === 'string') {
+      const title = action.type;
+      const nextTitle = this.actionTitle(action.action);
+      return nextTitle ? `${title}/${nextTitle}` : title;
+    }
+    return null;
   }
 
   render() {

@@ -6,16 +6,18 @@ import * as Controller from './controller';
 type Props = {
   className: string,
   dispatch: (action: Controller.Action) => void,
-  snapshotItem: Ship.SnapshotItem<mixed, mixed>,
+  snapshotItem: ?Ship.SnapshotItem<mixed, mixed>,
   title: string,
 };
 
 export default class SnapshotItem extends PureComponent<void, Props, void> {
   handleClickSnapshotItem = (): void => {
-    this.props.dispatch({
-      type: 'SelectSnapshotItem',
-      snapshotItem: this.props.snapshotItem,
-    });
+    if (this.props.snapshotItem) {
+      this.props.dispatch({
+        type: 'SelectSnapshotItem',
+        snapshotItem: this.props.snapshotItem,
+      });
+    }
   };
 
   render() {
@@ -24,7 +26,7 @@ export default class SnapshotItem extends PureComponent<void, Props, void> {
       padding: 2,
     };
     const styleChild = {
-      cursor: 'pointer',
+      ...this.props.snapshotItem ? {cursor: 'pointer'} : {},
       padding: 2,
     };
     return (
