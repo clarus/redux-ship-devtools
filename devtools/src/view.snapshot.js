@@ -34,21 +34,12 @@ export default class Snapshot extends PureComponent<void, Props, void> {
     );
   }
 
-  snapshotItemTitle(snapshotItem: Ship.SnapshotItem<mixed, mixed>): string {
-    if (snapshotItem.type === 'Effect' && typeof snapshotItem.effect === 'object' &&
-      snapshotItem.effect !== null && typeof snapshotItem.effect.type === 'string'
-    ) {
-      return snapshotItem.effect.type;
-    }
-    return snapshotItem.type;
-  }
-
   renderSnapshotItem(snapshotItem: Ship.SnapshotItem<mixed, mixed>) {
     switch (snapshotItem.type) {
       case 'All':
         return this.renderAll(snapshotItem.snapshots);
       default: {
-        const title = this.snapshotItemTitle(snapshotItem);
+        const title = Util.snapshotItemTitle(snapshotItem);
         return (
           <SnapshotItem
             className={Util.snapshotItemClassName(snapshotItem)}

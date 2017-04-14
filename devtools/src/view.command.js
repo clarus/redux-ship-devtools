@@ -33,7 +33,7 @@ export default class Command extends PureComponent<void, Props, void> {
     const className = `title is-5 tag ${Util.snapshotItemClassName(this.props.snapshotItem)}`;
     return (
       <div>
-        <p className={className}>{this.props.snapshotItem.type}</p>
+        <p className={className}>{Util.snapshotItemTitle(this.props.snapshotItem)}</p>
         {this.renderContent(this.props.snapshotItem)}
       </div>
     );
