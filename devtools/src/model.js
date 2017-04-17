@@ -2,7 +2,7 @@
 import type {Snapshot, SnapshotItem} from 'redux-ship';
 
 export type State = {
-  logs: {action: mixed, snapshot: Snapshot<mixed, mixed>}[],
+  logs: {action: mixed, serialized: bool, snapshot: Snapshot<mixed, mixed>}[],
   selectedLog: ?number,
   selectedSnapshotItem: ?SnapshotItem<mixed, mixed>,
 };
@@ -25,6 +25,8 @@ export type Commit = {
 } | {
   type: 'SelectSnapshotItem',
   snapshotItem: SnapshotItem<mixed, mixed>,
+} | {
+  type: 'ShowSerializedSnapshot',
 };
 
 export function reduce(state: State, commit: Commit): State {
@@ -36,6 +38,7 @@ export function reduce(state: State, commit: Commit): State {
           ...state.logs,
           {
             action: commit.action,
+            serialized: false,
             snapshot: commit.snapshot,
           }
         ],
@@ -58,6 +61,13 @@ export function reduce(state: State, commit: Commit): State {
       return {
         ...state,
         selectedSnapshotItem: commit.snapshotItem,
+      };
+    case 'ShowSerializedSnapshot':
+      return {
+        ...state,
+        logs: state.logs.map((log, index) =>
+          index === state.selectedLog ? {...log, serialized: true} : log
+        ),
       };
     default:
       return state;

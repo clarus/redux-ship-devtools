@@ -56,6 +56,7 @@ export default class Index extends PureComponent<void, Props, void> {
                     <div className="tile is-child box" style={style.tileChild}>
                       <Snapshot
                         dispatch={this.props.dispatch}
+                        serialized={!!selectedLog && selectedLog.serialized}
                         snapshot={selectedLog && selectedLog.snapshot}
                       />
                     </div>

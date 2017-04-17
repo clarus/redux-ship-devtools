@@ -8,10 +8,15 @@ import * as Util from './util';
 
 type Props = {
   dispatch: (action: Controller.Action) => void,
+  serialized: bool,
   snapshot: ?Ship.Snapshot<mixed, mixed>,
 };
 
 export default class Snapshot extends PureComponent<void, Props, void> {
+  handleShowSerializedSnapshot = (): void => {
+    this.props.dispatch({type: 'ShowSerializedSnapshot'});
+  };
+
   renderNothing() {
     return (
       <SnapshotItem
@@ -63,15 +68,21 @@ export default class Snapshot extends PureComponent<void, Props, void> {
     );
   }
 
+  renderSerializedSnapshot(snapshot: Ship.Snapshot<mixed, mixed>) {
+    return this.props.serialized ?
+      <Code isExpanded={false} json={this.props.snapshot} /> :
+      <a className="button is-link" onClick={this.handleShowSerializedSnapshot}>
+        Show serialized snapshot
+      </a>;
+  }
+
   render() {
     return (
       <div>
         <p className="title is-5">Snapshot</p>
-        {this.props.snapshot &&
-          <div style={{marginBottom: 20}}>
-            <Code isExpanded={false} json={this.props.snapshot} />
-          </div>
-        }
+        <div style={{marginBottom: 20}}>
+          {this.props.snapshot && this.renderSerializedSnapshot(this.props.snapshot)}
+        </div>
         <div className="tile is-ancestor">
           {this.props.snapshot && this.renderSnapshot(this.props.snapshot)}
         </div>
