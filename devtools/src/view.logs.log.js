@@ -6,7 +6,7 @@ type Props = {
   active: bool,
   dispatch: (action: Controller.Action) => void,
   index: number,
-  title: ?string,
+  title: string,
 };
 
 export default class LogsLog extends PureComponent<void, Props, void> {
@@ -21,7 +21,7 @@ export default class LogsLog extends PureComponent<void, Props, void> {
     const className = 'button is-fullwidth' + (this.props.active ? ' is-active' : '');
     return (
       <a className={className} onClick={this.handleClickLog}>
-        {this.props.title || 'unknown'}
+        {this.props.title}
       </a>
     );
   }

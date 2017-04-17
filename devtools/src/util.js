@@ -14,11 +14,40 @@ export function snapshotItemClassName(snapshotItem: SnapshotItem<mixed, mixed>):
   }
 }
 
-export function snapshotItemTitle(snapshotItem: SnapshotItem<mixed, mixed>): string {
-  if (snapshotItem.type === 'Effect' && typeof snapshotItem.effect === 'object' &&
-    snapshotItem.effect !== null && typeof snapshotItem.effect.type === 'string'
+function taggedUnionTitle(taggedUnion: mixed): ?string {
+  if (typeof taggedUnion === 'object' && taggedUnion !== null &&
+    typeof taggedUnion.type == 'string'
   ) {
-    return snapshotItem.effect.type;
+    const {type} = taggedUnion;
+    const subTitle = Object.keys(taggedUnion)
+      .sort()
+      .reduce(
+        (accumulator: ?string, key) =>
+          !accumulator && typeof taggedUnion === 'object' && taggedUnion !== null ?
+            taggedUnionTitle(taggedUnion[key]) :
+            accumulator,
+        null
+      );
+    return subTitle ? `${type}/${subTitle}` : type;
   }
-  return snapshotItem.type;
+  return null;
+}
+
+function taggedUnionTitleOrDefault(taggedUnion: mixed): string {
+  return taggedUnionTitle(taggedUnion) || 'unknown';
+}
+
+export function actionTitle(action: mixed): string {
+  return taggedUnionTitleOrDefault(action);
+}
+
+export function snapshotItemTitle(snapshotItem: SnapshotItem<mixed, mixed>): string {
+  switch (snapshotItem.type) {
+    case 'Commit':
+      return taggedUnionTitleOrDefault(snapshotItem.commit);
+    case 'Effect':
+      return taggedUnionTitleOrDefault(snapshotItem.effect);
+    default:
+      return snapshotItem.type;
+  }
 }
