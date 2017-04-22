@@ -1,14 +1,11 @@
 // @flow
 import * as Ship from 'redux-ship';
 
-type Control<Action, Effect, Commit, State> =
-  (action: Action) => Ship.Ship<Effect, Commit, State, void>;
-
-export function inspect<Action, Effect, Commit, State>(
-  control: Control<Action, Effect, Commit, State>
-): Control<Action, Effect, Commit, State> {
+export function inspect<Action, Effect, Commit, State, A>(
+  control: (action: Action) => Ship.Ship<Effect, Commit, State, A>
+): (action: Action) => Ship.Ship<Effect, Commit, State, A> {
   return function* (action) {
-    const {snapshot} = yield* Ship.snap(control(action));
+    const {result, snapshot} = yield* Ship.snap(control(action));
     window.postMessage({
       type: 'ReduxShipDevtools',
       payload: {
@@ -17,5 +14,6 @@ export function inspect<Action, Effect, Commit, State>(
       },
       version: 1,
     }, '*');
+    return result;
   };
 }

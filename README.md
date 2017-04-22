@@ -33,9 +33,9 @@ function dispatch(action: Controller.Action): void {
 ## API
 ### `inspect`
 ```js
-<Action, Effect, Commit, State>(
-  control: (action: Action) => Ship<Effect, Commit, State, void>
-) => (action: Action) => Ship<Effect, Commit, State, void>
+<Action, Effect, Commit, State, A>(
+  control: (action: Action) => Ship<Effect, Commit, State, A>
+) => (action: Action) => Ship<Effect, Commit, State, A>
 ```
 
-Returns a control function sending snapshots to the Redux Ship DevTools.
+Returns a function behaving as `control` but sending snapshots to the Redux Ship DevTools.
