@@ -10,11 +10,7 @@ The Redux Ship DevTools show a 2D view of the side effects of a [Redux Ship](htt
 Go to the [demo page](https://clarus.github.io/redux-ship-devtools/) to see a live example :rocket:.
 
 ## Install
-### For Chrome
-Download the extension on the [Chrome Web Store](https://chrome.google.com/webstore/detail/redux-ship-devtools/kbcgcifbcgamdlgdahbfangmfiofpmni).
-
-### For Firefox
-WIP
+Download the extension on the [Chrome Web Store](https://chrome.google.com/webstore/detail/redux-ship-devtools/kbcgcifbcgamdlgdahbfangmfiofpmni) (other platforms are not supported yet).
 
 ## Usage
 To enable the Redux Ship DevTools extension in a project you need to connect it to your code. For that, install the devtools package:
