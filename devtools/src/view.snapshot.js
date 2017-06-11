@@ -10,6 +10,7 @@ type Props = {
   dispatch: (action: Controller.Action) => void,
   serialized: bool,
   snapshot: ?Ship.Snapshot<mixed, mixed>,
+  selectedSnapshotItemIndex: ?(number[]),
 };
 
 export default class Snapshot extends PureComponent<void, Props, void> {
@@ -20,6 +21,7 @@ export default class Snapshot extends PureComponent<void, Props, void> {
   renderNothing() {
     return (
       <SnapshotItem
+        active={false}
         className="is-info"
         dispatch={this.props.dispatch}
         snapshotItemIndex={null}
@@ -49,6 +51,7 @@ export default class Snapshot extends PureComponent<void, Props, void> {
         const title = Util.snapshotItemTitle(snapshotItem);
         return (
           <SnapshotItem
+            active={JSON.stringify(index) === JSON.stringify(this.props.selectedSnapshotItemIndex)}
             className={Util.snapshotItemClassName(snapshotItem)}
             dispatch={this.props.dispatch}
             key={JSON.stringify(index)}

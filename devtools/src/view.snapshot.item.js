@@ -4,6 +4,7 @@ import * as Ship from 'redux-ship';
 import * as Controller from './controller';
 
 type Props = {
+  active: bool,
   className: string,
   dispatch: (action: Controller.Action) => void,
   snapshotItemIndex: ?(number[]),
@@ -21,17 +22,23 @@ export default class SnapshotItem extends PureComponent<void, Props, void> {
   };
 
   render() {
-    const className = `tile is-child notification has-text-centered ${this.props.className}`;
+    const className = `tile is-child notification button ${this.props.className}` +
+      (this.props.active ? ' is-active' : '');
     const styleParent = {
       padding: 2,
     };
     const styleChild = {
-      ...this.props.snapshotItemIndex ? {cursor: 'pointer'} : {},
+      height: 'auto',
       padding: 2,
     };
     return (
       <div className="tile is-parent" style={styleParent}>
-        <div className={className} onClick={this.handleClickSnapshotItem} style={styleChild}>
+        <div
+          className={className}
+          disabled={!this.props.snapshotItemIndex}
+          onClick={this.handleClickSnapshotItem}
+          style={styleChild}
+        >
           {this.props.title}
         </div>
       </div>

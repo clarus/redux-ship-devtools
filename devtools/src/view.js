@@ -60,6 +60,7 @@ export default class Index extends PureComponent<void, Props, void> {
                         dispatch={this.props.dispatch}
                         serialized={!!selectedLog && selectedLog.serialized}
                         snapshot={selectedLog && selectedLog.snapshot}
+                        selectedSnapshotItemIndex={selectedSnapshotItemIndex}
                       />
                     </div>
                   </div>
