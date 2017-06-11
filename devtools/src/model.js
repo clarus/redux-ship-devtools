@@ -35,29 +35,54 @@ export type Commit = {
   type: 'ShowSerializedSnapshot',
 };
 
+function getDefaultSnapshotItemIndex(snapshot: Snapshot<mixed, mixed>): ?(number[]) {
+  if (snapshot.length !== 0) {
+    const defaultSnapshotItem = snapshot[0];
+    if (defaultSnapshotItem.type === 'All') {
+      const index = getDefaultSnapshotItemIndex(defaultSnapshotItem.snapshots[0]);
+      return index ? [0, 0, ...index] : null;
+    }
+    return [0];
+  }
+  return null;
+}
+
 export function reduce(state: State, commit: Commit): State {
   switch (commit.type) {
-    case 'AddLog':
+    case 'AddLog': {
+      const selectedLog = typeof state.selectedLog !== 'number' ?
+        state.logs.length :
+        state.selectedLog;
+      const logs = [
+        ...state.logs,
+        {
+          action: commit.action,
+          serialized: false,
+          snapshot: commit.snapshot,
+        }
+      ];
       return {
         ...state,
-        logs: [
-          ...state.logs,
-          {
-            action: commit.action,
-            serialized: false,
-            snapshot: commit.snapshot,
-          }
-        ],
-        selectedLog: typeof state.selectedLog !== 'number' ?
-          state.logs.length :
-          state.selectedLog,
+        logs,
+        selectedLog,
+        selectedSnapshotItems: state.selectedSnapshotItems[selectedLog] ?
+          state.selectedSnapshotItems : {
+            ...state.selectedSnapshotItems,
+            [selectedLog]: getDefaultSnapshotItemIndex(logs[selectedLog].snapshot),
+          },
       };
+    }
     case 'Clear':
       return initialState;
     case 'SelectLog':
       return commit.logIndex === state.selectedLog ? state : {
         ...state,
         selectedLog: commit.logIndex,
+        selectedSnapshotItems: state.selectedSnapshotItems[commit.logIndex] ?
+          state.selectedSnapshotItems : {
+            ...state.selectedSnapshotItems,
+            [commit.logIndex]: getDefaultSnapshotItemIndex(state.logs[commit.logIndex].snapshot),
+          },
       };
     case 'SelectSnapshotItem':
       return typeof state.selectedLog !== 'number' ? state : {
