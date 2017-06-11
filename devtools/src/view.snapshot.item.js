@@ -6,16 +6,16 @@ import * as Controller from './controller';
 type Props = {
   className: string,
   dispatch: (action: Controller.Action) => void,
-  snapshotItem: ?Ship.SnapshotItem<mixed, mixed>,
+  snapshotItemIndex: ?(number[]),
   title: string,
 };
 
 export default class SnapshotItem extends PureComponent<void, Props, void> {
   handleClickSnapshotItem = (): void => {
-    if (this.props.snapshotItem) {
+    if (this.props.snapshotItemIndex) {
       this.props.dispatch({
         type: 'SelectSnapshotItem',
-        snapshotItem: this.props.snapshotItem,
+        snapshotItemIndex: this.props.snapshotItemIndex,
       });
     }
   };
@@ -26,7 +26,7 @@ export default class SnapshotItem extends PureComponent<void, Props, void> {
       padding: 2,
     };
     const styleChild = {
-      ...this.props.snapshotItem ? {cursor: 'pointer'} : {},
+      ...this.props.snapshotItemIndex ? {cursor: 'pointer'} : {},
       padding: 2,
     };
     return (

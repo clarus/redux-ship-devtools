@@ -22,34 +22,37 @@ export default class Snapshot extends PureComponent<void, Props, void> {
       <SnapshotItem
         className="is-info"
         dispatch={this.props.dispatch}
-        snapshotItem={null}
+        snapshotItemIndex={null}
         title="Nothing"
       />
     );
   }
 
-  renderAll(snapshots: Ship.Snapshot<mixed, mixed>[]) {
+  renderAll(snapshots: Ship.Snapshot<mixed, mixed>[], index: number[]) {
     return (
-      <div className="tile">
+      <div className="tile" key={JSON.stringify(index)}>
         {snapshots.length !== 0 ?
-          snapshots.map(snapshot => this.renderSnapshot(snapshot)) :
+          snapshots.map((snapshot, currentIndex) =>
+            this.renderSnapshot(snapshot, [...index, currentIndex])
+          ) :
           this.renderNothing()
         }
       </div>
     );
   }
 
-  renderSnapshotItem(snapshotItem: Ship.SnapshotItem<mixed, mixed>) {
+  renderSnapshotItem(snapshotItem: Ship.SnapshotItem<mixed, mixed>, index: number[]) {
     switch (snapshotItem.type) {
       case 'All':
-        return this.renderAll(snapshotItem.snapshots);
+        return this.renderAll(snapshotItem.snapshots, index);
       default: {
         const title = Util.snapshotItemTitle(snapshotItem);
         return (
           <SnapshotItem
             className={Util.snapshotItemClassName(snapshotItem)}
             dispatch={this.props.dispatch}
-            snapshotItem={snapshotItem}
+            key={JSON.stringify(index)}
+            snapshotItemIndex={index}
             title={title}
           />
         );
@@ -57,11 +60,13 @@ export default class Snapshot extends PureComponent<void, Props, void> {
     }
   }
 
-  renderSnapshot(snapshot: Ship.Snapshot<mixed, mixed>) {
+  renderSnapshot(snapshot: Ship.Snapshot<mixed, mixed>, index: number[]) {
     return (
-      <div className="tile is-vertical">
+      <div className="tile is-vertical" key={JSON.stringify(index)}>
         {snapshot.length !== 0 ?
-          snapshot.map(snapshotItem => this.renderSnapshotItem(snapshotItem)) :
+          snapshot.map((snapshotItem, currentIndex) =>
+            this.renderSnapshotItem(snapshotItem, [...index, currentIndex])
+          ) :
           this.renderNothing()
         }
       </div>
@@ -84,7 +89,7 @@ export default class Snapshot extends PureComponent<void, Props, void> {
           {this.props.snapshot && this.renderSerializedSnapshot(this.props.snapshot)}
         </div>
         <div className="tile is-ancestor">
-          {this.props.snapshot && this.renderSnapshot(this.props.snapshot)}
+          {this.props.snapshot && this.renderSnapshot(this.props.snapshot, [])}
         </div>
       </div>
     );

@@ -6,6 +6,7 @@ import Action from './view.action';
 import Command from './view.command';
 import Logs from './view.logs';
 import Snapshot from './view.snapshot';
+import * as Ship from 'redux-ship';
 
 type Props = {
   dispatch: (action: Controller.Action) => void,
@@ -14,9 +15,10 @@ type Props = {
 
 export default class Index extends PureComponent<void, Props, void> {
   render() {
-    const selectedLog = typeof this.props.state.selectedLog === 'number' ?
-      this.props.state.logs[this.props.state.selectedLog] :
-      null;
+    const {state} = this.props;
+    const selectedLog = Model.getSelectedLog(state);
+    const selectedSnapshotItem = Model.getSelectedSnapshotItem(state);
+    const selectedSnapshotItemIndex = Model.getSelectedSnapshotItemIndex(state);
     const style = {
       notification: {
         marginBottom: 25,
@@ -40,7 +42,7 @@ export default class Index extends PureComponent<void, Props, void> {
                   <div className="tile is-child box" style={style.tileChild}>
                     <Logs
                       dispatch={this.props.dispatch}
-                      state={this.props.state}
+                      state={state}
                     />
                   </div>
                 </div>
@@ -61,11 +63,11 @@ export default class Index extends PureComponent<void, Props, void> {
                       />
                     </div>
                   </div>
-                  {this.props.state.selectedSnapshotItem &&
+                  {selectedSnapshotItem &&
                     <div className="tile is-parent" style={style.tileParent}>
                       <div className="tile is-child box" style={style.tileChild}>
                         <Command
-                          snapshotItem={this.props.state.selectedSnapshotItem}
+                          snapshotItem={selectedSnapshotItem}
                         />
                       </div>
                     </div>

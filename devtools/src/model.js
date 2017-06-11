@@ -1,16 +1,22 @@
 // @flow
 import type {Snapshot, SnapshotItem} from 'redux-ship';
 
+type Log = {
+  action: mixed,
+  serialized: bool,
+  snapshot: Snapshot<mixed, mixed>,
+};
+
 export type State = {
-  logs: {action: mixed, serialized: bool, snapshot: Snapshot<mixed, mixed>}[],
+  logs: Log[],
   selectedLog: ?number,
-  selectedSnapshotItem: ?SnapshotItem<mixed, mixed>,
+  selectedSnapshotItems: {[logIndex: number]: number[]},
 };
 
 export const initialState: State = {
   logs: [],
   selectedLog: null,
-  selectedSnapshotItem: null,
+  selectedSnapshotItems: {},
 };
 
 export type Commit = {
@@ -24,7 +30,7 @@ export type Commit = {
   logIndex: number,
 } | {
   type: 'SelectSnapshotItem',
-  snapshotItem: SnapshotItem<mixed, mixed>,
+  snapshotItemIndex: number[],
 } | {
   type: 'ShowSerializedSnapshot',
 };
@@ -45,9 +51,6 @@ export function reduce(state: State, commit: Commit): State {
         selectedLog: typeof state.selectedLog !== 'number' ?
           state.logs.length :
           state.selectedLog,
-        selectedSnapshotItem: typeof state.selectedLog !== 'number' ?
-          commit.snapshot[0] || null :
-          state.selectedSnapshotItem,
       };
     case 'Clear':
       return initialState;
@@ -55,13 +58,15 @@ export function reduce(state: State, commit: Commit): State {
       return commit.logIndex === state.selectedLog ? state : {
         ...state,
         selectedLog: commit.logIndex,
-        selectedSnapshotItem: state.logs[commit.logIndex].snapshot[0] || null,
       };
     case 'SelectSnapshotItem':
-      return {
-        ...state,
-        selectedSnapshotItem: commit.snapshotItem,
-      };
+      return typeof state.selectedLog !== 'number' ? state : {
+          ...state,
+          selectedSnapshotItems: {
+            ...state.selectedSnapshotItems,
+            [state.selectedLog]: commit.snapshotItemIndex,
+          },
+        };
     case 'ShowSerializedSnapshot':
       return {
         ...state,
@@ -72,4 +77,41 @@ export function reduce(state: State, commit: Commit): State {
     default:
       return state;
   }
+}
+
+export function getSelectedLog(state: State): ?Log {
+  return typeof state.selectedLog === 'number' ?
+    state.logs[state.selectedLog] :
+    null;
+}
+
+export function getSelectedSnapshotItemIndex(state: State): ?(number[]) {
+  return typeof state.selectedLog === 'number' ?
+    state.selectedSnapshotItems[state.selectedLog] :
+    null;
+}
+
+function extractSnapshotItem(
+  snapshot: Snapshot<mixed, mixed>,
+  index: number[]
+): ?SnapshotItem<mixed, mixed> {
+  if (index.length === 0) {
+    return null;
+  }
+  const [firstIndex, secondIndex, ...otherIndexes] = index;
+  const item = snapshot[firstIndex];
+  if (item) {
+    if (item.type === 'All' && typeof secondIndex === 'number') {
+      return extractSnapshotItem(item.snapshots[secondIndex], otherIndexes);
+    }
+    return item;
+  }
+  return null;
+}
+
+export function getSelectedSnapshotItem(state: State): ?SnapshotItem<mixed, mixed> {
+  const selectedLog = getSelectedLog(state);
+  const selectedSnapshotItemIndex = getSelectedSnapshotItemIndex(state);
+  return selectedLog && selectedSnapshotItemIndex &&
+    extractSnapshotItem(selectedLog.snapshot, selectedSnapshotItemIndex);
 }
