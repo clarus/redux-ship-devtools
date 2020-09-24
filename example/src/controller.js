@@ -19,7 +19,7 @@ function* getEye(): Control<void> {
     yield* Ship.commit({
       type: 'GetEyeStart',
     });
-    const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
+    const r2d2 = yield* Effect.httpRequest('https://swapi.dev/api/people/3/');
     yield* Ship.commit({
       type: 'GetEyeSuccess',
       eye: r2d2.eye_color,
@@ -33,7 +33,7 @@ function* getMovies(): Control<void> {
     yield* Ship.commit({
       type: 'GetMoviesStart',
     });
-    const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
+    const r2d2 = yield* Effect.httpRequest('https://swapi.dev/api/people/3/');
     const movieUrls: string[] = r2d2.films;
     const movieTitles = yield* Ship.all(movieUrls.map(function* (movieUrl) {
       const movie = yield* Effect.httpRequest(movieUrl);
@@ -77,7 +77,7 @@ function* getPeople(): Control<void> {
     yield* Ship.commit({
       type: 'GetPeopleStart',
     });
-    const r2d2 = yield* Effect.httpRequest('https://swapi.co/api/people/3/');
+    const r2d2 = yield* Effect.httpRequest('https://swapi.dev/api/people/3/');
     const homeWorldUrl: string = r2d2.homeworld;
     const speciesUrl: string = r2d2.species[0];
     yield* Ship.all([
